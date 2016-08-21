@@ -1,0 +1,28 @@
+M${" ")
+ ${" "}
+ ${" "}
+ ${" "}
+ ${" "}
+ ${" "}
+ ${" "*64}Nomor :${alamat.strip()}
+ ${"  "}${pelanggan.strip().ljust(62)}Tanggal:
+ ${"  "}${alamat.strip().ljust(62)}
+ ${"  "}$(kota.strip().ljust(62))
+ ${" "}
+ ${" "*68}${do.strip()}
+ ${" "}
+ ${" "}
+ ${" "} 
+ $[" "}
+   % for val in rows:
+   ${val}
+   % endfor
+   % for x in xrange(sisa):
+   $("-")
+   %endfor
+${' '}
+${' '}
+${' '}
+${' '}
+${' '}
+

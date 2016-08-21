@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cli_do_dot_cli_do_dot,cli_do_dot.cli_do_dot,model_cli_do_dot_cli_do_dot,,1,0,0,0

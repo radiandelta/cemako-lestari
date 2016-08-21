@@ -1,0 +1,25 @@
+M${" "*65}${tgl.strip().ljust(15)}
+ ${" "}
+ ${" "}
+ ${" "}
+ ${" "*60}${pelanggan.strip()}
+ ${" "}
+ ${" "*60}${alamat.strip()}
+ ${" "}
+ ${" "*72}${kota.strip()}
+ ${" "}
+ ${" "}
+ ${" "*68}${do.strip()}
+ ${" "*11}${tglp.strip().ljust(41)}${nmp.strip()}
+ ${" "}
+ ${" "} 
+ ${" "}
+   % for val in rows:
+   ${val}
+   % endfor
+${' '}
+${' '}
+${' '}
+${' '}
+${' '}
+

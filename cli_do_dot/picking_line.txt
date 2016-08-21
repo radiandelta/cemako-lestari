@@ -1,0 +1,1 @@
+${" "*4}${qty.rjust(10)}${" "} ${uom.ljust(12)} ${name.ljust(15)} ${desk.strip().ljust(42)}

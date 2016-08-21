@@ -1,0 +1,1 @@
+${" "*2}${no.rjust(3)}${"  "}${qty.rjust(7)}${"  "}{desk.strip().ljust(47)}${unit_price.rjust(13)}${" "}${subtotal.rjust(17)}
