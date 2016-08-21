@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_radian_global_diskon_radian_global_diskon,radian_global_diskon.radian_global_diskon,model_radian_global_diskon_radian_global_diskon,,1,0,0,0

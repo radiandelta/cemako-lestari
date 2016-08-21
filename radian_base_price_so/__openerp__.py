@@ -1,0 +1,15 @@
+{
+	'name': 'Base Price SO',
+    'version': '0.2016-04-18.1',
+    'summary': 'Create Base Price Sales Order',
+    'depends': ['sale'],
+    'author': 'Radian Delta',
+    'description': "Menambahkan field Base Price pada Sales Order",
+    'website': 'http://www.radiandelta.com',
+    'category': 'sales',
+    'demo': [],
+    'test': [],
+    'data': ['radian_base_price_so_view.xml'],
+    'auto_install': False,
+    'installable': True,
+}

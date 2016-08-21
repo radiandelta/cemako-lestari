@@ -1,0 +1,16 @@
+{
+	'name': 'Base Price Invoice',
+    'version': '2016-04-18.1',
+    'summary': 'Create Base Price Invoice',
+    'depends': ['account'],
+    'author': 'Radian Delta',
+    'description': "Menambahkan field Base Price pada Sales Invoice",
+    'website': 'http://www.radiandelta.com',
+    'category': 'invoice',
+    'demo': [],
+    'test': [],
+    'data': ['radian_base_price_inv_view.xml'],
+	'css':['mycssfile.css'],
+    'auto_install': False,
+    'installable': True,
+}

@@ -1,0 +1,95 @@
+<openerp>
+    <data>
+		<record model="ir.ui.view" id="view_order_form">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group/group[2]/field[@name='date_order']" position="after">
+					<field name="nomor_fp"/>
+					<field name="cabang"/>
+					<field name="iskomisi"/>
+				</xpath>
+				<xpath expr="//form/sheet/notebook/page/group[@name='sale_total']/field[@name='amount_untaxed']" position="after">
+					<field name="diskon" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+				</xpath>
+				<xpath expr="//form/sheet/notebook/page/field[@name='order_line']" position="after">
+ 
+				</xpath>
+				<xpath expr="//form/sheet/notebook/page/field[@name='order_line']/form/group/group/field[@name='price_unit' ]" position="after">
+					<field name="diskonrp"/>
+				</xpath>
+				<xpath expr="//form/sheet/notebook/page/group[@class='oe_subtotal_footer oe_right']/field[@name='amount_total']" position="after">
+					<label for="dsp_total_chem" class="oe_subtotal_footer_separator oe_inline"/>
+					<field name="dsp_total_chem" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+					<label for="dsp_total_lubs" class="oe_subtotal_footer_separator oe_inline"/>
+					<field name="dsp_total_lubs" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+					<label for="dsp_total_othr" class="oe_subtotal_footer_separator oe_inline"/>
+					<field name="dsp_total_othr" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+					<label for="dsp_total_net" class="oe_subtotal_footer_separator oe_inline"/>
+					<field name="dsp_total_net" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+				</xpath>
+				<xpath expr="//form/sheet/notebook/page[@string='Other Information']" position="after">
+					<page string="P.D.">
+						<group>
+							<group col="2" name="Chemical">
+								<field name="total_chem"/>
+								<field name="rate_chem" attrs="{'invisible':[('iskomisi','=',True)]}"/>
+								<field name="komisi_chem" attrs="{'invisible':[('iskomisi','=',True)]}"/>
+								<field name='komisi_chem_man' attrs="{'invisible':[('iskomisi','=',False)]}"/>
+							</group>
+							<group col="2" name="Lubricant">
+								<field name="total_lubs"/>
+								<field name="rate_lubs" attrs="{'invisible':[('iskomisi','=',True)]}"/>
+								<field name="komisi_lubs" attrs="{'invisible':[('iskomisi','=',True)]}"/>
+								<field name="komisi_lubs_man" attrs="{'invisible':[('iskomisi','=',False)]}"/>
+							</group>
+							<group col="2" name="total_pd">
+								<field name="pd1" label="PD" widget='monetary' options="{'currecy_field': 'currency_id'}"/>
+								<field name="pd_rate" />
+								<field name="pd2" label="PD1" widget='monetary' options="{'currecy_field': 'currency_id'}"/>
+								<field name="total_pd" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+								<field name="tanggal_pd" />
+							</group>
+							<group col="2" name="Komisi">
+								<field name="total_othr"/>
+								<field name="total_net"/>
+								<field name="total_komisi"/>
+								<field name="komisi_rate"/>
+								<field name='komisi1'/>
+								<field name='grand_komisi'/>
+							</group>
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_sales_order_filter">
+			<field name="name">sale.order.list.select</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_sales_order_filter"/>
+			<field name="arch" type="xml">
+				<xpath expr="//search/field[@name='product_id']"  position="after">
+					<field name="client_order_ref"/>
+				</xpath>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_order_tree">
+			<field name="name">sale.order.tree</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_tree"/>
+			<field name="arch" type="xml">
+				<xpath expr="//tree/field[@name='name']" position="after">
+					<field name="client_order_ref"/>
+				</xpath>
+				<xpath expr="//tree/field[@name='user_id']" position="after">
+					<field name="total_chem"/>
+					<field name="total_lubs"/>
+					<field name="total_othr"/>
+					<field name="total_net"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

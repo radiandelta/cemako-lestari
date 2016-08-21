@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_order_form">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/notebook/page/field[@name='order_line']/form/group/group/field[@name='price_unit' ]" position="before">
+					<field name="label"/>
+					<field name="base_price"/>
+					<field name="cetak"/>
+				</xpath>
+				<xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit' ]" position="before">
+					<field name="base_price"/>
+					<field name="cetak"/>
+				</xpath>
+				<xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal' ]" position="before">
+					<field name="net_subtotal"/>
+				</xpath>
+			</field>
+		</record>
+		<template id="cemako_quotation_inherit" inherit_id="sale.report_saleorder_document">
+			<xpath expr="//tbody[@class='sale_tbody']//tr" position="replace">
+				<tr t-foreach="o.order_line" t-as="l">
+					<div t-if="l.cetak">
+						<td>
+                           <span t-field="l.name"/>
+                        </td>
+                        <td>
+                            <span t-esc="', '.join(map(lambda x: x.name, l.tax_id))"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="l.product_uom_qty"/>
+                            <span groups="product.group_uom" t-field="l.product_uom"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="l.price_unit"/>
+                        </td>
+                        <td groups="sale.group_discount_per_so_line">
+                            <span t-field="l.discount"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="l.price_subtotal"
+                                t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+                        </td>
+					</div>
+				</tr>
+			</xpath>	
+		</template>
+		<record id="view_partner_form" model="ir.ui.view">
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group/group[2]/field[@name='title']" position="after">
+					<field name="npwp"/>
+				</xpath>
+			</field>
+		</record>
+		<record id="view_users_form" model="ir.ui.view">
+			<field name="name">res.users.form</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/notebook/page[@string='Preferences']/group/group[@string='Localization']/field[@name='tz']" position="after">
+					<field name="rate_pd"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>
