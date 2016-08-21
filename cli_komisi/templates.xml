@@ -1,0 +1,109 @@
+<openerp>
+    <data>
+ 		<record id="view_komisi_tree" model="ir.ui.view">
+			<field name="name">cli.komisi.tree</field>
+			<field name="model">cli.komisi</field>
+			<field name="arch" type="xml">
+				<tree string="Periode">
+					<field name="periode_awal"/>
+					<field name="periode_akhir"/>
+				</tree>
+			</field>
+		</record>
+		<record id="form_komisi" model="ir.ui.view">
+			<field name="name">Komisi</field>
+			<field name="model">cli.komisi</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Periode">
+					<header>
+						<button string="estimasi" type="object" name="generate_est" class="oe_highlight"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="periode_awal"/>
+								<field name="periode_akhir"/>
+								<field name="estimated"/>
+							</group>
+							<group>
+								<field name="est_total_pd"/>
+								<field name="est_kom_chem"/>
+								<field name="est_kom_lubs"/>
+							</group>
+						</group>
+						<field name="komisi_line">
+							<tree string="Detail">
+								<field name="user_id"/>
+								<field name="est_tot_chem"/>
+								<field name="rate_chem"/>
+								<field name="est_kom_chem"/>
+								<field name="est_tot_lubs"/>
+								<field name="rate_lubs"/>
+								<field name="est_kom_lubs"/>
+								<field name="est_tot_othr"/>
+								<field name="est_total_kom"/>
+								<field name="est_total_pd"/>
+							</tree>
+						</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="form_komisi_line" model="ir.ui.view">
+			<field name="name">komisi.line</field>
+			<field name="model">cli.komisi.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Detail Komisi">
+					<sheet>
+						<group>
+							<field name="user_id"/>
+							<field name="est_tot_chem"/>
+							<field name="rate_chem"/>
+							<field name="est_kom_chem"/>
+							<field name="est_tot_lubs"/>
+							<field name="rate_lubs"/>
+							<field name="est_kom_lubs"/>
+							<field name="est_tot_othr"/>
+							<field name="est_total_kom"/>
+							<field name="est_total_pd"/>
+						</group>
+						<field name="komisi_order_line">
+							<field name="name"/>
+							<field name="date_order"/>
+						</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="action_komisi" model="ir.actions.act_window">
+			<field name="name">komisi</field>
+			<field name="res_model">cli.komisi</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Komisi" id="menu_komisi" parent="base.menu_base_partner" groups="account.group_account_manager" sequence="2"/>
+		<menuitem  
+			id="menu_periode" 
+			parent="menu_komisi"
+			name="Kalkulasi"
+			sequence="1"
+			action="action_komisi"
+			groups="account.group_account_manager"/>
+			
+        <record id="view_users_form" model="ir.ui.view">
+			<field name="name">res.users.form</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/notebook/page[@string='Preferences']/group/group[@string='Localization']/field[@name='tz']" position="after">
+					<field name="komisi"/>
+					<field name="komisiflat"/>
+				</xpath>
+			</field>
+		</record>
+    </data>
+</openerp>

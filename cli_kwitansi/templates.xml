@@ -1,0 +1,199 @@
+<openerp>
+    <data>
+		<record id="view_order_form" model="ir.ui.view">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group/group[2]/field[@name='client_order_ref']" position="after">
+					<field name="nomor_po"/>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="invoice_form" model="ir.ui.view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group/group[2]/field[@name='date_invoice']" position="after">
+					<field name="nomor_po"/>
+				</xpath>
+			</field>
+		</record>
+		
+		<template id="kwitansi_document">
+			<t t-foreach="docs" t-as="o">
+				<div class="page" style="font-family:Verdana;font-size:1.2em;font-weight:bold">
+					<table class="col-xs-12" style="border-top: 1px solid; border-bottom:1px solid">
+						<tr><td style="font-size:20;height:10px">PT.CEMAKO LESTARI INDONESIA</td></tr>
+						<tr><td>Jl.DINOYO NO.63 KEPUTRAN TEGALSARI SURABAYA 60265</td></tr>
+						<tr><td>TELP (031)5676225 - FAX(031)5663087</td></tr>
+					</table>
+					<table style="width:100%">
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td style="width:20%">Sudah Terima dari</td><td style="width:2%">:</td><td style="width:79%"><span t-esc="o.partner_id.name.upper()"/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><span/></td><td><span/></td><td><span t-esc="o.partner_id.street.strip()+'-'+o.partner_id.city.strip()"/></td>
+						</tr>
+						<tr style="height:7mm">
+							<br/>
+						</tr>
+						<tr style="height:7mm">
+							<td>Jumlah uang</td><td>:</td><td style="background-color:lightgray"><span t-esc="o.terbilang.upper()+' RUPIAH'"/></td>
+						</tr>
+						<tr style="height:7mm">
+							<br/>
+						</tr>
+						<tr style="height:7mm">
+							<td>Untuk pembayaran</td><td>:</td><td><span t-esc="'INVOICE NO.'+o.nomor_fp.strip()+' SPK NO:'+o.nomor_po.strip()+' TGL '+o.tanggal.upper()"/></td>
+						</tr>
+					</table>
+					<table style="width:100%">
+						<tr style="height:7mm">
+							<td style="width:21%"><span/></td><td style="width:40%"><span>JUMLAH INVOICE</span></td><td style="width:5%"><span>Rp.</span></td><td style="text-align:right;width:20%"><span t-esc="'{:,.2f}'.format(o.amount_untaxed).replace('.','+').replace(',','.').replace('+',',')"/></td><td><span/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><span/></td><td><span>PPN 10%</span></td><td><span>Rp.</span></td><td style="text-align:right"><span t-esc="'{:,.2f}'.format(o.amount_tax).replace('.','+').replace(',','.').replace('+',',')"/></td><td><span/></td>
+						</tr>
+						<tr style="height:7mm">
+							<br/>
+						</tr>
+					</table>
+					<table style="width:100%">
+						<tr style="height:7mm">
+							<td><span/></td><td><span/></td><td><span/></td><td><span t-esc="'SURABAYA, '+o.tanggal.upper()"/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td style="width:20%">Rp.</td><td style="width:30%"><span style="background-color:lightgray" t-esc="'{:,.2f}'.format(o.amount_total).replace('.','+').replace(',','.').replace('+',',')"/></td><td style="width:20%"><span/></td><td>INDRIATI HANAWI</td>
+						</tr>
+						<tr style="height:7mm">
+							<td><span/></td><td><span/></td><td><span/></td><td>DIREKTUR</td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+					</table>
+					<table class="col-xs-12" style="border-top: 1px solid; border-bottom:1px solid">
+						<tr><td style="font-size:20;height:10px">PT.CEMAKO LESTARI INDONESIA</td></tr>
+						<tr><td>Jl.DINOYO NO.63 KEPUTRAN TEGALSARI SURABAYA 60265</td></tr>
+						<tr><td>TELP (031)5676225 - FAX(031)5663087</td></tr>
+					</table>
+					<table style="width:100%">
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td style="width:20%">Sudah Terima dari</td><td style="width:2%">:</td><td style="width:79%"><span t-esc="o.partner_id.name.upper()"/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><span/></td><td><span/></td><td><span t-esc="o.partner_id.street.strip()+'-'+o.partner_id.city.strip()"/></td>
+						</tr>
+						<tr style="height:7mm">
+							<br/>
+						</tr>
+						<tr style="height:7mm">
+							<td>Jumlah uang</td><td>:</td><td style="background-color:lightgray"><span t-esc="o.terbilang.upper()+' RUPIAH'"/></td>
+						</tr>
+						<tr style="height:7mm">
+							<br/>
+						</tr>
+						<tr style="height:7mm">
+							<td>Untuk pembayaran</td><td>:</td><td><span t-esc="'INVOICE NO.'+o.nomor_fp.strip()+' SPK NO:'+o.nomor_po.strip()+' TGL '+o.tanggal.upper()"/></td>
+						</tr>
+					</table>
+					<table style="width:100%">
+						<tr style="height:7mm">
+							<td style="width:21%"><span/></td><td style="width:40%"><span>JUMLAH INVOICE</span></td><td style="width:5%"><span>Rp.</span></td><td style="text-align:right;width:20%"><span t-esc="'{:,.2f}'.format(o.amount_untaxed).replace('.','+').replace(',','.').replace('+',',')"/></td><td><span/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><span/></td><td><span>PPN 10%</span></td><td><span>Rp.</span></td><td style="text-align:right"><span t-esc="'{:,.2f}'.format(o.amount_tax).replace('.','+').replace(',','.').replace('+',',')"/></td><td><span/></td>
+						</tr>
+						<tr style="height:7mm">
+							<br/>
+						</tr>
+					</table>
+					<table style="width:100%">
+						<tr style="height:7mm">
+							<td><span/></td><td><span/></td><td><span/></td><td><span t-esc="'SURABAYA, '+o.tanggal.upper()"/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td><br/></td>
+						</tr>
+						<tr style="height:7mm">
+							<td style="width:20%">Rp.</td><td style="width:30%"><span style="background-color:lightgray" t-esc="'{:,.2f}'.format(o.amount_total).replace('.','+').replace(',','.').replace('+',',')"/></td><td style="width:20%"><span/></td><td>INDRIATI HANAWI</td>
+						</tr>
+						<tr style="height:7mm">
+							<td><span/></td><td><span/></td><td><span/></td><td>DIREKTUR</td>
+						</tr>
+					</table>
+				</div>
+			</t>
+		</template>
+		
+		<template id="kwitansi">
+			<t t-foreach="doc_ids" t-as="doc-id">
+				<t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'cli_kwitansi.kwitansi_document')"/>
+			</t>
+		</template>
+		
+		<report 
+			id = "cetak_kwitansi"
+			model = "account.invoice"
+			string = "Cetak Kwitansi"
+			report_type = "qweb-pdf"
+			name = "cli_kwitansi.kwitansi"
+			attachment_use = "False"
+			file = "kwitansi"
+		/>
+		
+		<record id="kwitansi_pf" model="report.paperformat">
+			<field name="name">kwitansi</field>
+			<field name="default" eval="True"/>
+			<field name="format">A4</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">10</field>
+			<field name="margin_bottom">10</field>
+			<field name="Margin_left">10</field>
+			<field name="margin_right">10</field>
+			<field name="header_line" eval="False"/>
+			<field name="header_spacing">3</field>
+			<field name="dpi">90</field>
+		</record>
+		
+		<record id="cli_kwitansi.cetak_kwitansi" model="ir.actions.report.xml">
+			<field name="paperformat_id" ref="cli_kwitansi.kwitansi_pf"/>
+		</record>
+
+    </data>
+</openerp>

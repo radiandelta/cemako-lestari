@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cli_komisi_cli_komisi,cli_komisi.cli_komisi,model_cli_komisi_cli_komisi,,1,0,0,0

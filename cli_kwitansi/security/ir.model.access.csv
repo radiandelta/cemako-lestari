@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cli_kwitansi_cli_kwitansi,cli_kwitansi.cli_kwitansi,model_cli_kwitansi_cli_kwitansi,,1,0,0,0

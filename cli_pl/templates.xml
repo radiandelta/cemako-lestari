@@ -1,0 +1,200 @@
+<openerp>
+    <data>
+		<record model="ir.ui.view" id="view_picking_form">
+			<field name="name">stock.picking.form</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group/group/field[@name='partner_id']" position="before">
+					<field name="nomor_do"/>
+					<field name="no_pesan"/>
+					<field name="tgl_pesan"/>
+					<field name="nama_pesan"/>
+				</xpath>
+			</field>
+		</record>
+		<template id="do_preprinted_ppn_document">
+			<t t-foreach="docs" t-as="o">
+				<div class="page">
+					<table class="col-xs-12" style="font-family: 'Arial';font-size:1.2em;font-weight:bold">
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5" style="padding-top:5px;padding-left:60px"><span t-field="o.tgl_cetak"/></td>
+						</tr>
+						<tr><td><br/></td></tr>
+						<tr><td><br/></td></tr>
+						<tr><td><br/></td></tr>
+						<tr><td><br/></td></tr>
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5"><span t-field="o.partner_id.name"/></td>
+						</tr>
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5" style="height:40px;vertical-align:bottom"><span t-field="o.partner_id.street"/></td>
+						</tr>
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5"><span t-field="o.partner_id.street2"/></td>
+						</tr>
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5" style="height:35px;vertical-align:bottom;padding-left:120px"><span t-field="o.partner_id.city"/></td>
+						</tr>
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5" style="height:65px;vertical-align:bottom;padding-left:120px"><span t-field="o.nomor_do"/></td>
+						</tr>
+					</table>
+					<table class="col-xs-12" style="font-family: 'Arial';font-size:1.2em;font-weight:bold">
+						<tr style="height:80px">
+							<td style="padding-left:80px"><span t-field="o.tgl_pesan"/></td>
+							<td style="padding-top:8px;padding-left:100px"><span t-field="o.nama_pesan"/></td>
+						</tr>
+					</table>
+					<table class="col-xs-12" style="font-family: 'Arial';font-size:1.2em;font-weight:bold">
+						<thead>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+						</thead>
+						<tbody>
+							<tr t-foreach="o.move_lines" t-as="move">
+								<table class="col-xs-12" style="font-family: 'Arial';font-size:1.2em;font-weight:bold">
+									<tr>
+										<td style="width:12%;text-align:right;padding-right:10px"><span t-esc="'{:,.0f}'.format(int(move.product_uom_qty))"/></td>
+										<td style="width:12%;text-align:left;padding-left:15px"><span t-field="move.product_uom"/></td>
+										<td style="width:19%;text-align:left;padding-left:20px"><span/></td>
+										<td style="width:57%;text-align:left;padding-left:20px"><span t-field="move.name"/></td>
+									</tr>
+								</table>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</t>
+		</template>
+		<template id="do_preprinted_ppn">
+			<t t-foreach="doc_ids" t-as="doc-id">
+				<t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'cli_pl.do_preprinted_ppn_document')"/>
+			</t>
+		</template>
+		<report
+			id="custom_do_preprinted_ppn"
+			model="stock.picking"
+			string="DO PPN"
+			report_type="qweb-pdf"
+			name="cli_pl.do_preprinted_ppn"
+			attachment_use="False"
+			file="DO preprinted PPN"
+		/>
+		<record id="cli_do" model="report.paperformat">
+			<field name="name">Surat Jalan CLI</field>
+			<field name="default" eval="True"/>
+			<field name="format">custom</field>
+			<field name="page_height">160</field>
+			<field name="page_width">215</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">3</field>
+			<field name="margin_bottom">3</field>
+			<field name="Margin_left">3</field>
+			<field name="margin_right">3</field>
+			<field name="header_line" eval="False"/>
+			<field name="header_spacing">3</field>
+			<field name="dpi">80</field>
+		</record>
+		<record id="cli_pl.custom_do_preprinted_ppn" model="ir.actions.report.xml">
+			<field name="paperformat_id" ref="cli_pl.cli_do"/>
+		</record>
+
+		<template id="do_preprinted_nonppn_document">
+			<t t-foreach="docs" t-as="o">
+				<div class="page">
+					<table class="col-xs-12" style="font-family: 'Arial';font-size:1.2em;font-weight:bold">
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5" style="text-align:right;padding-top:5px;padding-right:75px"><span t-esc="o.tgl_cetak[:-5]"/><span style="display:inline-block;width:40px"/><span t-esc="o.tgl_cetak[len(o.tgl_cetak)-2:]"/></td>
+						</tr>
+						<tr><td><br/></td></tr>
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5" style="padding-left:15px"><span t-field="o.partner_id.name"/></td>
+						</tr>
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5" style="height:40px;vertical-align:bottom;padding-left:15px"><span t-field="o.partner_id.street"/></td>
+						</tr>
+						<tr>
+							<td class="col-xs-7"><span/></td>
+							<td class="col-xs-5" style="padding-left:15px"><span t-field="o.partner_id.street2"/></td>
+						</tr>
+						<tr>
+							<td class="col-xs-7" style="padding-top:10px"><span style="display:inline-block;width:300px"/><span t-field="o.nomor_do"/></td>
+							<td class="col-xs-5" style="height:35px;vertical-align:bottom;padding-left:150px"><span t-field="o.partner_id.city"/></td>
+						</tr>
+					</table>
+					<table class="col-xs-12" style="font-family: 'Arial';font-size:1.2em;font-weight:bold">
+						<tr style="height:90px">
+							<td><span/></td>
+							<td><span/></td>
+						</tr>
+					</table>
+					<table class="col-xs-12" style="font-family: 'Arial';font-size:1.2em;font-weight:bold">
+						<tbody>
+							<tr t-foreach="o.move_lines" t-as="move">
+								<table class="col-xs-12" style="font-family: 'Arial';font-size:1.2em;font-weight:bold">
+									<tr style="height:30px">
+										<td style="width:12%;text-align:right;padding-right:10px"><span t-esc="'{:,.0f}'.format(int(move.product_uom_qty))"/></td>
+										<td style="width:12%;text-align:left;padding-left:15px"><span t-field="move.product_uom"/></td>
+										<td style="width:76%;text-align:left;padding-left:20px"><span t-esc="move.name"/></td>
+									</tr>
+								</table>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</t>
+		</template>
+		<template id="do_preprinted_nonppn">
+			<t t-foreach="doc_ids" t-as="doc-id">
+				<t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'cli_pl.do_preprinted_nonppn_document')"/>
+			</t>
+		</template>
+		<report
+			id="custom_do_preprinted_nonppn"
+			model="stock.picking"
+			string="DO NON-PPN"
+			report_type="qweb-pdf"
+			name="cli_pl.do_preprinted_nonppn"
+			attachment_use="False"
+			file="DO preprinted non PPN"
+		/>
+		<record id="cli_do" model="report.paperformat">
+			<field name="name">Surat Jalan CLI</field>
+			<field name="default" eval="True"/>
+			<field name="format">custom</field>
+			<field name="page_height">160</field>
+			<field name="page_width">215</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">13</field>
+			<field name="margin_bottom">3</field>
+			<field name="Margin_left">3</field>
+			<field name="margin_right">3</field>
+			<field name="header_line" eval="False"/>
+			<field name="header_spacing">3</field>
+			<field name="dpi">80</field>
+		</record>
+		<record id="cli_pl.custom_do_preprinted_nonppn" model="ir.actions.report.xml">
+			<field name="paperformat_id" ref="cli_pl.cli_do"/>
+		</record>
+		
+    </data>
+</openerp>

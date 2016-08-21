@@ -1,0 +1,15 @@
+<openerp>
+    <data>
+		<record model="ir.ui.view" id="view_order_form">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//form/header/button[@name='invoice_cancel']" position="after">
+					<button name="update_pd" type="object" string="Recalc"/>
+				</xpath>
+			</field>
+		</record>
+    </data>
+</openerp>

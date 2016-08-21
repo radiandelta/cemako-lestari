@@ -1,0 +1,53 @@
+<openerp>
+    <data>
+		<record id="view_realisasi_tree" model="ir.ui.view">
+			<field name="name">komisi.realisasi.tree</field>
+			<field name="model">komisi.realisasi</field>
+			<field name="arch" type="xml">
+				<tree string="Realisasi">
+					<field name='name'/>
+					<field name="periode_awal"/>
+					<field name="periode_akhir"/>
+					<field name='real_total_kom'/>
+					<field name='real_total_pd'/>
+				</tree>
+			</field>
+		</record>
+		<record id="view_realisasi_form" model="ir.ui.view">
+			<field name="name">komisi.realisasi.form</field>
+			<field name="model">komisi.realisasi</field>
+			<field name="arch" type="xml">
+				<form string="Realisasi">
+					<header>
+						<button string='Isi data' type="object" name="generate_data" class="oe_highlight"/>
+					</header>
+					<sheet>
+						<group>
+							<field name='name'/>
+							<field name="periode_awal"/>
+							<field name="periode_akhir"/>
+							<field name='real_total_kom'/>
+							<field name='real_total_pd'/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="action_realisasi" model="ir.actions.act_window">
+			<field name="name">realisasi</field>
+			<field name="res_model">komisi.realisasi</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Realisasi" id="menu_realisasi" parent="cli_komisi.menu_komisi" groups="account.group_account_manager"/>
+		<menuitem  
+			id="menu_periode_realisasi" 
+			parent="menu_realisasi"
+			name="Periode"
+			sequence="1"
+			action="action_realisasi"
+			groups="account.group_account_manager"/>
+
+    </data>
+</openerp>
